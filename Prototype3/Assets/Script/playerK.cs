@@ -111,7 +111,7 @@ public class playerK : MonoBehaviour
 
 
     }
-    private void MoveUp(float deltaTime)
+    public void MoveUp(float deltaTime)
     {
         if (nodeDestination != null)
         {
@@ -152,7 +152,7 @@ public class playerK : MonoBehaviour
             isLeft = false;
         }
     }
-    private void MoveDown(float deltaTime)
+    public void MoveDown(float deltaTime)
     {
         if (nodeDestination != null)
         {
@@ -172,7 +172,7 @@ public class playerK : MonoBehaviour
             isDown = false;
         }
     }
-    private void MoveRight(float deltaTime)
+    public void MoveRight(float deltaTime)
     {
         if (nodeDestination != null)
         {
