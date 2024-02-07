@@ -5,13 +5,8 @@ using UnityEngine;
 
 public class WallCollider : MonoBehaviour
 {
-    [SerializeField] GameObject player;
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("collision");
-        player.GetComponent<playerK>().BounceBack();
 
-    }
+
 
 
 

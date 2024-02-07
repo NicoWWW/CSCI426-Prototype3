@@ -100,7 +100,7 @@ public class playerK : MonoBehaviour
         {
             Debug.Log("moving up2");
 
-            if ((transform.position - nodeDestination.transform.position).magnitude <= 0.1f)
+            if ((transform.position - nodeDestination.transform.position).magnitude <= 0.05f)
             {
                 transform.position = nodeDestination.transform.position;
                 currNode = nodeDestination;
@@ -134,7 +134,7 @@ public class playerK : MonoBehaviour
         {
             Debug.Log("moving left2");
 
-            if ((transform.position - nodeDestination.transform.position).magnitude <= 0.1f)
+            if ((transform.position - nodeDestination.transform.position).magnitude <= 0.05f)
             {
                 transform.position = nodeDestination.transform.position;
                 currNode = nodeDestination;
@@ -170,7 +170,7 @@ public class playerK : MonoBehaviour
         {
             Debug.Log("moving down2");
 
-            if ((transform.position - nodeDestination.transform.position).magnitude <= 0.1f)
+            if ((transform.position - nodeDestination.transform.position).magnitude <= 0.05f)
             {
                 transform.position = nodeDestination.transform.position;
                 currNode = nodeDestination;
@@ -207,7 +207,7 @@ public class playerK : MonoBehaviour
         {
             Debug.Log("moving right2");
 
-            if ((transform.position - nodeDestination.transform.position).magnitude <= 0.1f)
+            if ((transform.position - nodeDestination.transform.position).magnitude <= 0.05f)
             {
                 transform.position = nodeDestination.transform.position;
                 currNode = nodeDestination;
