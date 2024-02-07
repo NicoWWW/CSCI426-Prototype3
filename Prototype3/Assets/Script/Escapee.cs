@@ -9,9 +9,12 @@ public class Escapee : MonoBehaviour
     CodeReception m_reception;
     Rigidbody2D rb;
     CountDown timer;
+    playerK m_player;
 
     private bool isProcessing = false;
     private float movingVelocity = 2.0f;
+    private bool isCaught = false;
+    private Color initialColor;
 
     public class CodeInput
     {
@@ -27,56 +30,28 @@ public class Escapee : MonoBehaviour
         rb = this.gameObject.GetComponent<Rigidbody2D>();
         timer = GameObject.FindGameObjectWithTag("Timer").GetComponent<CountDown>();
         input.m_codeList = new List<int>();
+        m_player = GetComponent<playerK>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*
-        if (Input.GetKeyDown(KeyCode.Space) && !isRecepting && count < 9)
-        {
-            isRecepting = true;
-            codeTimer = 0.0f;
-        }
-
-        if (Input.GetKeyUp(KeyCode.Space) && isRecepting)
-        {
-            isRecepting = false;
-            Debug.Log("timer:" + codeTimer);
-
-            if (0.0f < codeTimer && codeTimer < 0.18f)
-            {
-                input.m_codeList.Add(0);
-                count++;
-            }
-            else
-            {
-                input.m_codeList.Add(1);
-                count++;
-            }
-        }
-
-        if (isRecepting)
-        {
-            codeTimer += Time.deltaTime;
-        }
-        */
-
-        /*
-        if (count == totalInput - 1)
-        {
-            Debug.Log(input.m_codeList[0].ToString() + input.m_codeList[1].ToString() + input.m_codeList[2].ToString() + input.m_codeList[3].ToString());
-        }
-        */
-
         input = m_reception.GetInput();
 
-        if (timer.GetCurrentTime() <= 0.0f)
+        if (!isCaught)
         {
-            isProcessing = true;
-            //Debug.Log("total input: " + count);
-            CodeProcess();
+            if (!timer.GetCanCode())
+            {
+                Debug.Log("Player starts moving.");
+                isProcessing = true;
+                CodeProcess();
+            }
         }
+        else
+        {
+
+        }
+
 
     }
 
@@ -86,33 +61,60 @@ public class Escapee : MonoBehaviour
         {
             for (int i = 0; i < input.m_codeList.Count; i += 2)
             {
-                if (i + 1 <= input.m_codeList.Count)
+                if (i + 1 < input.m_codeList.Count)
                 {
                     if (input.m_codeList[i] == 1 && input.m_codeList[i + 1] == 1) //  Go Up: __
                     {
                         // TO DO: Go up movement
+                        m_player.MoveUp(Time.deltaTime);
                         Debug.Log("Up");
                     }
                     else if (input.m_codeList[i] == 0 && input.m_codeList[i + 1] == 0) //   Go down: **
                     {
                         // TO DO: Go down movement
+                        m_player.MoveDown(Time.deltaTime);
                         Debug.Log("Down");
                     }
                     else if (input.m_codeList[i] == 1 && input.m_codeList[i + 1] == 0) //   Go left:: _*
                     {
                         // TO DO: Go left movement
+                        m_player.MoveLeft(Time.deltaTime);
                         Debug.Log("Left");
                     }
                     else if (input.m_codeList[i] == 0 && input.m_codeList[i + 1] == 1) //   Go right: *_
                     {
                         // TO DO: Go right movement
+                        m_player.MoveRight(Time.deltaTime);
                         Debug.Log("Right");
 
                     }
                 }
             }
 
-            isProcessing = false;
         }
+
+        //Debug.Log("Process finished.");
+        isProcessing = false;
+        timer.SetCanCode();
+    }
+
+    public bool GetIfCaught()
+    {
+        return isCaught;
+    }
+
+    public bool GetIsProcess()
+    {
+        return isProcessing;
+    }
+
+    public void ChangeColorWhenLightOff()
+    {
+        GetComponent<Renderer>().material.color = Color.yellow;
+    }
+
+    public void ChangeColorWhenLightOn()
+    {
+        GetComponent<Renderer>().material.color = Color.black;
     }
 }

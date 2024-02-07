@@ -132,7 +132,7 @@ public class playerK : MonoBehaviour
         }
 
     }
-    private void MoveLeft(float deltaTime)
+    public void MoveLeft(float deltaTime)
     {
         if (nodeDestination != null)
         {
