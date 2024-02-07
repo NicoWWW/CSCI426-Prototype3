@@ -23,6 +23,8 @@ public class playerK : MonoBehaviour
     bool isUp = false;
     bool isDown = false;
 
+    bool canInput = true; //true when player stops moving
+
     private void Start()
     {
         currNode = nodeManager.GetNode(0, 0);
@@ -56,56 +58,24 @@ public class playerK : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W))
         {
-            Debug.Log("moving up0");
-            if (timeSinceInput > inputCoolDown)
-            {
-                Debug.Log("moving up1 " + timeSinceInput);
-                timeSinceInput = 0.0f;
-                nodeDestination = nodeManager.GetNodeUp((int)currNode.GetNodeCoordinate().x, (int)currNode.GetNodeCoordinate().y);
-                MoveUp(Time.deltaTime);
-                isUp = true;
-            }
+            MoveUp(Time.deltaTime);
 
         }
         else if (Input.GetKey(KeyCode.A))
         {
-            Debug.Log("moving left0 " + timeSinceInput);
-            if (timeSinceInput > inputCoolDown)
-            {
-                Debug.Log("moving left1");
-                timeSinceInput = 0.0f;
-                nodeDestination = nodeManager.GetNodeLeft((int)currNode.GetNodeCoordinate().x, (int)currNode.GetNodeCoordinate().y);
-                MoveLeft(Time.deltaTime);
-                isLeft = true;
-            }
+            MoveLeft(Time.deltaTime);
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            Debug.Log("moving down0 " + timeSinceInput);
-            if (timeSinceInput > inputCoolDown)
-            {
-                Debug.Log("moving down1");
-                timeSinceInput = 0.0f;
-                nodeDestination = nodeManager.GetNodeDown((int)currNode.GetNodeCoordinate().x, (int)currNode.GetNodeCoordinate().y);
-                MoveDown(Time.deltaTime);
-                isDown = true;
-            }
+            MoveDown(Time.deltaTime);
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            Debug.Log("moving right0 " + timeSinceInput);
-            if (timeSinceInput > inputCoolDown)
-            {
-                Debug.Log("moving right1");
-                timeSinceInput = 0.0f;
-                nodeDestination = nodeManager.GetNodeRight((int)currNode.GetNodeCoordinate().x, (int)currNode.GetNodeCoordinate().y);
-                MoveRight(Time.deltaTime);
-                isRight = true;
-            }
+            MoveRight(Time.deltaTime);
         }
         else
         {
-            timeSinceInput += Time.deltaTime;
+            //timeSinceInput += Time.deltaTime;
         }
 
 
@@ -113,57 +83,99 @@ public class playerK : MonoBehaviour
     }
     public void MoveUp(float deltaTime)
     {
+
+        if (!isUp && canInput)
+        {
+            Debug.Log("moving up START");
+            //timeSinceInput = 0.0f;
+            nodeDestination = nodeManager.GetNodeUp((int)currNode.GetNodeCoordinate().x, (int)currNode.GetNodeCoordinate().y);
+            isUp = true;
+            canInput = false;
+            Debug.Log("current Coord: " + currNode.GetNodeCoordinate().x + " " + currNode.GetNodeCoordinate().y);
+            Debug.Log("New Coord: " + nodeDestination.GetNodeCoordinate().x + " " + nodeDestination.GetNodeCoordinate().y);
+        }
+
+
         if (nodeDestination != null)
         {
             Debug.Log("moving up2");
-            transform.position = transform.position + up * speed * deltaTime;
+
             if ((transform.position - nodeDestination.transform.position).magnitude <= 0.1f)
             {
                 transform.position = nodeDestination.transform.position;
                 currNode = nodeDestination;
                 isUp = false;
-                Debug.Log("NewCoord: " + currNode.GetNodeCoordinate().x + " " + currNode.GetNodeCoordinate().y);
+                canInput = true;
             }
         }
         else
         {
             Debug.Log("up3 NULL");
-            isUp = false;
+            //isUp = false;
         }
-
+        transform.position = transform.position + up * speed * deltaTime;
     }
     public void MoveLeft(float deltaTime)
     {
+
+        if (!isLeft && canInput)
+        {
+            Debug.Log("moving left START");
+            //timeSinceInput = 0.0f;
+            nodeDestination = nodeManager.GetNodeLeft((int)currNode.GetNodeCoordinate().x, (int)currNode.GetNodeCoordinate().y);
+            isLeft = true;
+            canInput = false;
+            Debug.Log("current Coord: " + currNode.GetNodeCoordinate().x + " " + currNode.GetNodeCoordinate().y);
+            Debug.Log("New Coord: " + nodeDestination.GetNodeCoordinate().x + " " + nodeDestination.GetNodeCoordinate().y);
+        }
+
+
         if (nodeDestination != null)
         {
             Debug.Log("moving left2");
-            transform.position = transform.position + left * speed * deltaTime;
+
             if ((transform.position - nodeDestination.transform.position).magnitude <= 0.1f)
             {
                 transform.position = nodeDestination.transform.position;
                 currNode = nodeDestination;
                 isLeft = false;
-                Debug.Log("NewCoord: " + currNode.GetNodeCoordinate().x + " " + currNode.GetNodeCoordinate().y);
+                canInput = true;
+
             }
         }
         else
         {
             Debug.Log("left3 NULL");
-            isLeft = false;
+            //isLeft = false;
         }
+
+        transform.position = transform.position + left * speed * deltaTime;
     }
     public void MoveDown(float deltaTime)
     {
+
+        if (!isDown && canInput)
+        {
+            Debug.Log("moving down START");
+            //timeSinceInput = 0.0f;
+            nodeDestination = nodeManager.GetNodeDown((int)currNode.GetNodeCoordinate().x, (int)currNode.GetNodeCoordinate().y);
+            isDown = true;
+            canInput = false;
+            Debug.Log("current Coord: " + currNode.GetNodeCoordinate().x + " " + currNode.GetNodeCoordinate().y);
+            Debug.Log("New Coord: " + nodeDestination.GetNodeCoordinate().x + " " + nodeDestination.GetNodeCoordinate().y);
+        }
+
+
         if (nodeDestination != null)
         {
             Debug.Log("moving down2");
-            transform.position = transform.position + down * speed * deltaTime;
+
             if ((transform.position - nodeDestination.transform.position).magnitude <= 0.1f)
             {
                 transform.position = nodeDestination.transform.position;
                 currNode = nodeDestination;
                 isDown = false;
-                Debug.Log("NewCoord: " + currNode.GetNodeCoordinate().x + " " + currNode.GetNodeCoordinate().y);
+                canInput = true;
             }
         }
         else
@@ -171,27 +183,45 @@ public class playerK : MonoBehaviour
             Debug.Log("down3 NULL");
             isDown = false;
         }
+
+        transform.position = transform.position + down * speed * deltaTime;
     }
     public void MoveRight(float deltaTime)
     {
+
+
+
+        if (!isRight && canInput)
+        {
+            Debug.Log("moving right START");
+            //timeSinceInput = 0.0f;
+            nodeDestination = nodeManager.GetNodeRight((int)currNode.GetNodeCoordinate().x, (int)currNode.GetNodeCoordinate().y);
+            isRight = true;
+            canInput = false;
+            Debug.Log("current Coord: " + currNode.GetNodeCoordinate().x + " " + currNode.GetNodeCoordinate().y);
+            Debug.Log("New Coord: " + nodeDestination.GetNodeCoordinate().x + " " + nodeDestination.GetNodeCoordinate().y);
+        }
+
+
         if (nodeDestination != null)
         {
             Debug.Log("moving right2");
-            transform.position = transform.position + right * speed * deltaTime;
-            Debug.Log("this pos " + transform.position + " destPos " + nodeDestination.transform.position);
+
             if ((transform.position - nodeDestination.transform.position).magnitude <= 0.1f)
             {
                 transform.position = nodeDestination.transform.position;
                 currNode = nodeDestination;
                 isRight = false;
-                Debug.Log("NewCoord: " + currNode.GetNodeCoordinate().x + " " + currNode.GetNodeCoordinate().y);
+                canInput = true;
             }
         }
         else
         {
             Debug.Log("right3 NULL");
-            isRight = false;
+            //isRight = false;
         }
+        transform.position = transform.position + right * speed * deltaTime;
+
     }
 
     private void OnTriggerEnter2D()

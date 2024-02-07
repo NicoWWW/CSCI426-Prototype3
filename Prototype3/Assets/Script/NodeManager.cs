@@ -68,7 +68,7 @@ public class NodeManager : MonoBehaviour
         Debug.Log("GetNodeDown(" + x + ", " + y + ") = " + allNodes[(y * mazeWidth + 1) + x].GetNodeCoordinate().x + ", " + allNodes[(y * mazeWidth + 1) + x].GetNodeCoordinate().y);
         return allNodes[((y + 1) * mazeWidth) + x];
     }
-    public NodeBehaviour GetNodeUp(int x, int y)
+    public NodeBehaviour GetNodeUp(int y, int x)
     {
 
         if (y == 0)
