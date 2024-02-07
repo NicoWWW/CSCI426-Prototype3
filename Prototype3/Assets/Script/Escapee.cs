@@ -115,6 +115,6 @@ public class Escapee : MonoBehaviour
 
     public void ChangeColorWhenLightOn()
     {
-        GetComponent<Renderer>().material.color = Color.black;
+        GetComponent<Renderer>().material.color = Color.white;
     }
 }

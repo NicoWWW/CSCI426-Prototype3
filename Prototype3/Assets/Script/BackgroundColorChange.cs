@@ -9,6 +9,8 @@ public class BackgroundColorChange : MonoBehaviour
     Camera cm;
     CountDown m_manager;
     Escapee m_player;
+    GameObject nightWall;
+    GameObject dayWall;
 
     private Color currColor;
 
@@ -22,18 +24,16 @@ public class BackgroundColorChange : MonoBehaviour
 
     void Update()
     {
+        if (!m_manager.GetCanCode()) //  Light off
+        {
+            cm.backgroundColor = black;
+            m_player.ChangeColorWhenLightOff();
+        }
+        else // Light On
+        {
+            cm.backgroundColor = currColor;
+            m_player.ChangeColorWhenLightOn();
+        }
 
-    }
-
-    public void LightOff()
-    {
-        cm.backgroundColor = black;
-        m_player.ChangeColorWhenLightOff();
-    }
-
-    public void LightOn()
-    {
-        cm.backgroundColor = currColor;
-        m_player.ChangeColorWhenLightOn();
     }
 }
