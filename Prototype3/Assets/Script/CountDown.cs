@@ -16,12 +16,10 @@ public class CountDown : MonoBehaviour
     private bool canCode = true;
 
     Escapee m_player;
-    BackgroundColorChange cm;
 
     void Start()
     {
         m_player = GameObject.FindGameObjectWithTag("Player").GetComponent<Escapee>();
-        cm = Camera.main.GetComponent<BackgroundColorChange>();
     }
 
     void Update()
@@ -34,13 +32,11 @@ public class CountDown : MonoBehaviour
 
         //Debug.Log(countdownStarted);
 
-        if (!m_player.GetIsProcess() && currentTime == 0.0f && countdownStarted) // Time's up, Light off
+        else if (!m_player.GetIsProcess() && currentTime == 0.0f && countdownStarted) // Time's up, Light off
         {
-            //StartCoroutine(Wait(1.0f));
             Debug.Log("Light off. Can not code. Player Move.");
             canCode = false;
             countdownStarted = false;
-            cm.LightOff();
         }
 
         /*
@@ -51,12 +47,10 @@ public class CountDown : MonoBehaviour
 
         //*/
 
-        else if (!m_player.GetIfCaught() && currentTime == 0.0f && canCode && !m_player.GetIsProcess()) // Light On
+        if (!m_player.GetIfCaught() && currentTime == 0.0f && canCode && !m_player.GetIsProcess()) // Light On
         {
             Debug.Log("Light On. Can code. Player should not move.");
-            //StartCoroutine(Wait(1.0f));
             StartCoroutine(StartCountdown());
-            cm.LightOn();
         }
 
     }
